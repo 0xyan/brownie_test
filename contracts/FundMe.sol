@@ -22,7 +22,7 @@ contract FundMe {
 
     function fund() public payable {
         //minimum usd
-        uint256 minimumUSD = 50 * 10**18;
+        uint256 minimumUSD = 50 * 10 ** 18;
         require(
             getConversionRate(msg.value) >= minimumUSD,
             "less than the minimum"
@@ -39,11 +39,9 @@ contract FundMe {
         return uint256(answer * 10000000000);
     }
 
-    function getConversionRate(uint256 ethAmount)
-        public
-        view
-        returns (uint256)
-    {
+    function getConversionRate(
+        uint256 ethAmount
+    ) public view returns (uint256) {
         //calling the previus fuction to get price
         uint256 ethPrice = getPrice();
         uint256 ethAmountInUSD = (ethPrice * ethAmount) / 1000000000000000000;
@@ -52,9 +50,9 @@ contract FundMe {
 
     function getEntranceFee() public view returns (uint256) {
         //minimum usd
-        uint256 minimumUSD = 50 * 10**18;
+        uint256 minimumUSD = 50 * 10 ** 18;
         uint256 price = getPrice();
-        uint256 precision = 1 * 10**18;
+        uint256 precision = 1 * 10 ** 18;
         return (minimumUSD * precision) / price;
     }
 
@@ -63,8 +61,8 @@ contract FundMe {
     }
 
     function withdraw() public payable {
+        addressToAmountFunded[msg.sender] = 0;
         payable(msg.sender).transfer(addressToAmountFunded[msg.sender]);
-        addressToAmountFunded[msg.sender] == 0;
     }
 
     function withdrawAll() public payable onlyOwner {
